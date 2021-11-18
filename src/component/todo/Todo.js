@@ -3,7 +3,7 @@ import TodoItem from './TodoItem';
 import TodoPopup from './TodoPopup';
 import EditPopup from './EditPopup';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo, updateTodo, deleteTodo } from '../../redux/todo';
+import { addTodo, updateTodo, deleteTodo } from '../../redux/todosSlice';
 import { AddRounded } from '@material-ui/icons';
 import { Alert } from 'antd';
 

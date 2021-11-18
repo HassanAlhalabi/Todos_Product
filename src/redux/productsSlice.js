@@ -4,21 +4,32 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const getProducts = createAsyncThunk('products/fetchProducts', async () => {
     return fetch('https://wawinner.its.ae/dev/public/api/v1/front-end/campaign')
     .then(response => response.json())
-    .then(data => console.log(data.data));
   });
 
-export const todoSlice = createSlice({
+export const productsSlice = createSlice({
     name: 'products',
     initialState: {
         products: [],
-        status: null
+        status: 'loading'
     },
 
     reducers: {
+    },
+
+    extraReducers: {
+        [getProducts.pending] : (state,action) => {
+            state.status = 'loading';
+        },
+        [getProducts.fulfilled]: (state,payload) => {
+            state.products = payload;
+            state.status = 'success';
+            console.log(state.products.payload.data)
+        },
+        [getProducts.rejected]: (state,action) => {
+            state.status = 'failed'
+        }
     }
 
 })
 
-export const { addTodo, deleteTodo , updateTodo } = todoSlice.actions;
-
-export default todoSlice.reducer;
+export default productsSlice.reducer;
