@@ -1,38 +1,313 @@
-.App {
-  text-align: center;
+@import '~antd/dist/antd.css';
+
+:root {
+    --purble: #7F37A8;
+    --purble-dark: #491e61;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    /* background-color: #F3F2F7; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1{
+    color: #4D4D4F;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1.todo-header {
+    font-weight: 900;
+    text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.todo-list-holder {
+    max-width: 80%;
+    margin: 25px auto;
+    background-color: #FFF;
+    padding: 50px;
+    border-radius: 50px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.todo-item {
+    border-radius:18px;
+    padding: 25px 35px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-date p {
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.action-button {
+    fill: rgb(235, 58, 55) !important;
+    width: 35px !important;
+    height: 35px !important;
+    padding: 8px !important;
+    border-radius: 50%;
+    background-color: #FFF;
+    box-shadow: 0px 0px 3px 0px #888;
+    cursor: pointer;
+}
+
+.new-totdo-btn {
+    text-align: center;
+}
+
+.add-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    color: #FFF;
+    background-color: #22ea2d;
+    box-shadow: 0px 0px 3px 0px #888;
+    margin-top: 50px;
+}
+
+.todo-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #E1E1E1F2;
+    display: flex;
+}
+
+.popup-input {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    min-width: 70%;
+    padding: 25px;
+    border-radius: 18px;
+    background-color: #FFF;
+}
+
+.popup-input >div:first-of-type {
+    width: 70%;
+}
+
+.popup-input input[type='text'] {
+    border: none;
+    background-color: #eee;
+    border-radius:8px;
+    font-size: 18px;
+}
+
+.popup-input >div:last-of-type {
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.popup-input button {
+    padding-right: 25px;
+    padding-left: 25px;
+}
+
+.cancel-button {
+    border: none;
+    background-color: #fbece9;
+}
+
+.done-button {
+    border: none;
+    color: green;
+    background-color: #ecffec;
+    margin-left: 8px;
+}
+
+/* ****************************************************************************** */
+
+.product {
+    position: relative;
+    border-radius: 40px;
+    box-shadow: 0px 0px 10px 2px #dcdcdc;
+    width: 80vw;
+    min-height: 300px;
+    margin: auto;
+    margin: 100px auto;
+    display: flex;
+    padding-top: 100px;
+    padding-right: 50px;
+}
+
+@media(max-width: 767px) {
+    .product {
+        display: block;
+        padding: 140px 15px 20px;
+    }
+}
+
+.ant-progress-circle .ant-progress-inner {
+    width: 180px !important; 
+    height: 180px !important;
+}
+
+.ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path {
+    stroke: var(--purble) !important;
+    stroke-width: 3px !important;
+}
+
+.ant-progress-circle-trail {
+    stroke-width: .2rem !important;
+}
+
+.ant-progress-circle .ant-progress-text {
+    display: none;
+}
+
+.quntity-sold-holder {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.quntity-sold {
+    width: fit-content;
+    background-color: #FFF;
+}
+
+.quantities {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0px 3px 6px 0px #d2d2d2
+}
+
+.sold-number {
+    font-weight: 900;
+    font-size: 32px;
+    color: #7f37a8;
+}
+
+.sold-text {
+    color: #000;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.out-of-text,
+.total-quantity {
+    font-size: 12px;
+    color: #AAA;
+}
+
+.product-price {
+    position: absolute;
+    left: -20px;
+    top: 20px;
+    padding: 4px 16px;
+    background-color: var(--purble);
+    color: #FFF;
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 35px;
+}
+
+@media(max-width: 767px) {
+    .product-price {
+        top: 85px;
+        font-size: 24px;
+    }
+}
+
+.product-price::before {
+    content: '';
+    border: 14px solid transparent;
+    border-right-color: #491e61;
+    position: absolute;
+    top: calc(100% - 15px);
+    right: calc(100% - 34px);
+    transform: rotate(135deg);
+}
+
+
+.product-desc-holder,
+.prize-section {
+    width: 50%;
+}
+
+@media(max-width: 767px) {
+    .product-desc-holder,
+    .prize-section {
+        width: 100%;
+    }
+}
+
+.product-buttons {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.product-buttons button {
+    display: block;
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+    color: #FFF;
+    border-radius: 10px;
+
+}
+
+.favorite-button {
+    background-color: var(--purble-dark) !important;
+    margin-bottom: 10px !important;
+}
+
+.cart-button {
+    background-color: var(--purble) !important;
+}
+
+.product-desc {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+}
+
+.product-image {
+    margin-bottom: 30px;
+    padding: 0px 15px;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 190px;
+}
+
+.buy-text {
+    font-weight: 900;
+    color: #7f37a8;
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+.product-name {
+    color: #777;
+    font-size: 14px;
+}
+
+.product-desc-text{
+    color: #777;
+    font-size: 12px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 35px;
 }
