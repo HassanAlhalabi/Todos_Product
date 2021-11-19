@@ -28,32 +28,52 @@ const TodoItem = ({ todoProps, todoAction}) => {
                 <div className='todo-date'>
                     <p>{todoProps.date}</p>
                 </div>
-                <div className='todo-date'>
-                    {todoProps.title}
+                <div className='todo-title'>
+                    <p>{todoProps.title}</p>
                 </div>
             </div>  
             <div className='todo-actions'>
                 {
                     todoProps.isActive === true ?
                         <div className='actions-holder'>
-                            <Button shape='circle'>
-                                <DeleteRounded 
-                                    className='red-btn'
-                                    onClick={() => todoAction(todoProps.id,'delete')} />
+                            <Button 
+                                shape='circle' 
+                                type='primary'
+                                icon={<DeleteRounded fontSize='small'/>}
+                                className='action-button red-button'
+                                onClick={() => todoAction(todoProps.id,'delete')}   >
                             </Button>
-                            <EditRounded 
-                                className='action-button' 
-                                onClick={() => todoAction(todoProps.id,'edit')} />
-                            <Close 
-                                className='action-button'
-                                onClick={() => todoAction(todoProps.id,'cancel')} />
-                            <Check 
-                                className='action-button' 
-                                onClick={() => todoAction(todoProps.id,'setComplete')} />
+                            <Button 
+                                shape='circle' 
+                                type='primary'
+                                icon={<EditRounded fontSize='small'/>}
+                                className='action-button blue-button'
+                                onClick={() => todoAction(todoProps.id,'edit')}  >
+                            </Button>
+                            <Button 
+                                shape='circle' 
+                                type='primary'
+                                icon={<Close fontSize='small'/>}
+                                className='action-button red-button'
+                                onClick={() => todoAction(todoProps.id,'cancel')}  >
+                            </Button>
+                            <Button 
+                                shape='circle' 
+                                type='primary'
+                                icon={<Check fontSize='small'/>}
+                                className='action-button green-button'
+                                onClick={() => todoAction(todoProps.id,'setComplete')}  >
+                            </Button>
                         </div>
                     :
                         <div className='actions-holder'>
-                            <DeleteRounded className='action-button' onClick={() => todoAction(todoProps.id,'delete')} />
+                            <Button 
+                                shape='circle' 
+                                type='primary'
+                                icon={<DeleteRounded fontSize='small'/>}
+                                className='action-button transparent-button-delete'
+                                onClick={() => todoAction(todoProps.id,'delete')}  >
+                            </Button>
                         </div>
                 }
             </div>   

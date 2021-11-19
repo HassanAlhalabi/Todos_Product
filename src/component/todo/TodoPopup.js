@@ -1,11 +1,13 @@
 import React from 'react';
-import {Input} from 'antd';
+import { Input } from 'antd';
 import { Button } from 'antd';
+import { Alert } from 'antd';
 
-const TodoPopup = ({title, addTodo, hidePopup, handleInput}) => {
+const TodoPopup = ({title, addTodo, hidePopup, handleInput, error}) => {
 
     return(
         <div className='todo-popup'>
+            {error && <Alert className='error-message' description={error} type='error'/>}
             <div className='popup-input'>
                 <div>
                     <Input

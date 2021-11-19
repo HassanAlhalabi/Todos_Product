@@ -20,10 +20,9 @@ export const productsSlice = createSlice({
         [getProducts.pending] : (state,action) => {
             state.status = 'loading';
         },
-        [getProducts.fulfilled]: (state,payload) => {
-            state.products = payload;
+        [getProducts.fulfilled]: (state,response) => {
+            state.products = response.payload.data;
             state.status = 'success';
-            console.log(state.products.payload.data)
         },
         [getProducts.rejected]: (state,action) => {
             state.status = 'failed'

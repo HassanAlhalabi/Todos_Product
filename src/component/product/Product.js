@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import QuantityProgressBar from './QuantityProgressBar';
-import ProductImage from '../imgs/product-img.png';
-import CarImage from '../imgs/car.png';
+// import ProductImage from '../imgs/product-img.png';
+// import CarImage from '../imgs/car.png';
 import ProductDescription from './ProductDescription';
 import PrizeDescription from './PrizeDescription';
 import Button from '@material-ui/core/Button';
@@ -19,50 +19,55 @@ const Product = () => {
         dispatch(getProducts());
     },[dispatch]);
 
-    const products = useSelector(state => state.products);
-
+    const productsLoadingStatus = useSelector(state => state.products.status)
+    const products = useSelector(state => state.products.products);
+    console.log(productsLoadingStatus)
+    console.log(products)
 
     return(
 
-        <div>
-            { products.status === 'loading' ? 'loading' :
-                <div className='product'>
+        <div className='products-main-holder'>
+            { 
+                productsLoadingStatus === 'loading' ? 'loading' :
 
-                    <div className='quntity-sold-holder'>
-                        <QuantityProgressBar total={975} sold={382} />
-                    </div>
-                    <div className='product-price'>
-                        AED 50.00
-                    </div>
-                    <div className='product-buttons'>
-                        <Button className='favorite-button'>
-                            <Favorite fontSize='large'/>
-                        </Button>
-                        <Button  className='cart-button'>
-                            <AddShoppingCart fontSize='large'/>
-                        </Button>
-                    </div>
+                    products.map(product => 
+
+                        <div className='product' key={product.id}>
+
+                        <div className='quntity-sold-holder'>
+                            <QuantityProgressBar total={product.product_quantity} sold={product.quantity_sold} />
+                        </div>
+                        <div className='product-price'>
+                            AED {product.product_price}
+                        </div>
+                        <div className='product-buttons'>
+                            <Button className='favorite-button'>
+                                <Favorite fontSize='large'/>
+                            </Button>
+                            <Button  className='cart-button'>
+                                <AddShoppingCart fontSize='large'/>
+                            </Button>
+                        </div>
 
 
-                    <div className='product-desc-holder'>
-                        <ProductDescription
-                            image={ProductImage}
-                            title='Hoodie'
-                            desc="lrem ipsim dolor sit amit contetsd erer lks sadas lrem ipsim dolor 
-                            sit amit contetsd erer lks sadasddgjkadf jhkasdjh lsjdf hjkjashdf
-                            hjlasdfh hjfdara fh,sdfhf huealjkfefh  hdalkf  efjkhf efjkhfefjkhf"
-                        />
-                    </div>    
-                    <div className='prize-section'>
-                        <PrizeDescription
-                            image={CarImage}
-                            title='Hoodie'
-                            desc="lrem ipsim dolor sit amit contetsd erer lks sadas lrem ipsim dolor 
-                            sit amit contetsd erer lks sadasddgjkadf jhkasdjh lsjdf hjkjashdf
-                            hjlasdfh hjfdara fh,sdfhf huealjkfefh  hdalkf  efjkhf efjkhfefjkhf"
-                        />
+                        <div className='product-desc-holder'>
+                            <ProductDescription
+                                image={product.product_id.image}
+                                title={product.product_id.name}
+                                desc={product.product_id.descriptionnp }
+                            />
+                        </div>    
+                        <div className='prize-section'>
+                            <PrizeDescription
+                                image={product.prize_id.image}
+                                title={product.prize_id.name}
+                                desc={product.prize_id.descriptionnp }
+                            />
+                        </div>
                     </div>
-                </div>
+
+                    )
+
             }
        </div>     
     )

@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+
 export const todoSlice = createSlice({
     name: 'todos',
     initialState: {
@@ -32,18 +36,71 @@ export const todoSlice = createSlice({
     },
     reducers: {
         addTodo: (state,action) => {
-            state.todos.push(action.payload)
+            // Create Date Required Form
+            let currentDate = new Date();
+            let dateFormat =    `${months[currentDate.getMonth()]} 
+                                ${currentDate.getDate()}th, 
+                                ${currentDate.getFullYear()} 
+                                ${currentDate.getHours()}:${currentDate.getMinutes()}
+                                ${currentDate.toLocaleTimeString().split(' ')[1]}`
+            const newTodo = {
+                    id: Math.round(Math.random()*1000000)+'',
+                    title: action.payload,
+                    date: dateFormat,
+                    isCompleted: false,
+                    isActive: true,
+                    isCanceled: false,
+                }
+            state.todos.push(newTodo)
         },
         deleteTodo: (state,action) => {
-            state.todos = action.payload;
+            state.todos = state.todos.filter(todo => todo.id !== action.payload);
         },
         updateTodo: (state,action) => {
-            state.todos = action.payload;
-        }
+            console.log(action)
+            const newTodos = state.todos.map(todo => {
+                if(todo.id === action.payload.editId) {
+                    return {
+                        ...todo,
+                        title: action.payload.titleInput
+                    }
+                }
+                return todo
+            });
+            state.todos = newTodos;
+        },
+        setCanceled: (state,action) => {
+            const newTodos = state.todos.map(todo => {
+                if(todo.id === action.payload) {
+                    return {
+                        ...todo,
+                        isCanceled: true,
+                        isActive: false,
+                        isCompleted: false
+                    }
+                }
+                return todo
+            });
+            state.todos = newTodos;
+        },
+        setCompleted: (state,action) => {
+            const newTodos = state.todos.map(todo => {
+                if(todo.id === action.payload) {
+                    return {
+                        ...todo,
+                        isCanceled: false,
+                        isActive: false,
+                        isCompleted: true
+                    }
+                }
+                return todo
+            });
+            state.todos = newTodos;
+        },
     }
 
 })
 
-export const { addTodo, deleteTodo , updateTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo , updateTodo, setCanceled, setCompleted } = todoSlice.actions;
 
 export default todoSlice.reducer;
