@@ -375,6 +375,10 @@ h1.todo-header {
     margin-bottom: 10px !important;
 }
 
+.favorite-button.active {
+    color: palevioletred;
+}
+
 .cart-button {
     background-color: var(--purble) !important;
 }
@@ -538,6 +542,27 @@ h1.todo-header {
     width: 80%;
     margin: 100px auto;
     text-align: center;
+}
+
+.prize-section {
+    position: relative;
+}
+
+.winthis-image {
+    position: absolute;
+    top: -70px;
+    left: 40px;
+    transform: rotate(-3deg);
+}
+
+@media(max-width: 767px) {
+    .winthis-image {
+        display: none;
+    }
+}
+
+.winthis-image img {
+    max-width: 120px;
 }
 
 .loading-spinner {

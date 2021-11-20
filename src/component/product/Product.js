@@ -13,7 +13,8 @@ import { Alert } from 'antd';
 import LoadingSpinner from '../util/LoadingSpinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, addToCart, removeFromCart } from '../../redux/productsSlice';
-import { notification, Divider, Space } from 'antd'; 
+import { notification } from 'antd';
+import Winthis from '../imgs/winthis.png'
 
 const openNotification = () => {
     const args = {
@@ -26,8 +27,6 @@ const openNotification = () => {
   };
 
 const Product = () => {
-
-    const [notfShow,setnotfShow] = useState(false)
 
     const dispatch = useDispatch();
 
@@ -59,11 +58,11 @@ const Product = () => {
 
                                 {
 
-                                cart.filter(cartItem => cartItem.id === product.product_id.id).length === 0 ? null :
-                                    cart.filter(cartItem => cartItem.id === product.product_id.id)[0].quantity === product.product_quantity ?
-                                        setnotfShow(true)
-                                    :
-                                    null
+                                // cart.filter(cartItem => cartItem.id === product.product_id.id).length === 0 ? null :
+                                //     cart.filter(cartItem => cartItem.id === product.product_id.id)[0].quantity === product.product_quantity ?
+                                //        openNotification()
+                                //     :
+                                //     null
                                 }
 
                             <div className='quntity-sold-holder'>
@@ -82,7 +81,13 @@ const Product = () => {
                              </div>
                             
                              <div className='product-buttons'>
-                                 <Button className='favorite-button' icon={<Favorite fontSize='large'/>} />
+                                 {
+                                    product.isFavorite === 0 ?
+                                      <Button className='favorite-button' icon={<Favorite fontSize='large'/>} />
+                                    :
+                                        <Button className='favorite-button active' icon={<Favorite fontSize='large'/>} />
+                                }
+                                 
                                  <Button  className='cart-button' icon={<AddShoppingCart fontSize='large'/>} />
                              </div>
                         
@@ -147,6 +152,9 @@ const Product = () => {
                                     title={product.prize_id.name}
                                     desc={product.prize_id.description}
                                 />
+                                <div className='winthis-image'>
+                                        <img src={Winthis} />
+                                </div>
                             </div>
                         </div>
 
