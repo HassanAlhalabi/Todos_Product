@@ -56,14 +56,14 @@ const Product = () => {
 
                             <div className='product' key={product.id}>
 
-                                {
+                                {/* {
 
-                                // cart.filter(cartItem => cartItem.id === product.product_id.id).length === 0 ? null :
-                                //     cart.filter(cartItem => cartItem.id === product.product_id.id)[0].quantity === product.product_quantity ?
-                                //        openNotification()
-                                //     :
-                                //     null
-                                }
+                                cart.filter(cartItem => cartItem.id === product.product_id.id).length === 0 ? null :
+                                    cart.filter(cartItem => cartItem.id === product.product_id.id)[0].quantity === product.product_quantity ?
+                                       openNotification()
+                                    :
+                                    null
+                                } */}
 
                             <div className='quntity-sold-holder'>
                                 <QuantityProgressBar 
