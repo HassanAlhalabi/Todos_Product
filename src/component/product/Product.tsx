@@ -1,51 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import QuantityProgressBar from './QuantityProgressBar';
-import ProductImage from '../imgs/product-img.png';
-import CarImage from '../imgs/car.png';
 import ProductDescription from './ProductDescription';
 import PrizeDescription from './PrizeDescription';
 import { Button } from 'antd';
-import Favorite from '@material-ui/icons/Favorite';
-import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
-import Add from '@material-ui/icons/Add';
-import Remove from '@material-ui/icons/Remove';
+import { HeartFilled } from '@ant-design/icons';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined } from '@ant-design/icons';
 import { Alert } from 'antd';
 import LoadingSpinner from '../util/LoadingSpinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, addToCart, removeFromCart } from '../../redux/productsSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getProducts, addToCart, removeFromCart, toggleIsFavorite } from '../../redux/productsSlice';
 import { notification } from 'antd';
-import Winthis from '../imgs/winthis.png'
+import Winthis from '../imgs/winthis.png';
+import CartPopup from './CartPopup';
 
-const openNotification = () => {
+const openNotification = (message: string, description: string) => {
     const args = {
-      message: 'Hi',
-      description:
-        'You can not add any more products :(',
-      duration: 0,
+        message,
+        description,
+        duration: 3,
     };
     notification.open(args);
-  };
+};
 
-const Product = () => {
+const Product: React.FC = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getProducts());
-    },[dispatch]);
+    },[]);
 
-    const productsLoadingStatus = useSelector(state => state.products.status)
-    const products = useSelector(state => state.products.products);
-    const cart = useSelector(state => state.products.cart);
+    const [cartPopupOpen,setCartPopupOpen] = useState<boolean>(false);
+
+    const productsLoadingStatus = useAppSelector(state => state.products.status)
+    const products = useAppSelector(state => state.products.products);
+    const cart = useAppSelector(state => state.products.cart);
 
     return(
 
         <div className='products-main-holder'>
+            { cartPopupOpen && <CartPopup closeCartPopup={() => setCartPopupOpen(false)} />}
             { 
                 productsLoadingStatus === 'failed' ? 
                     
                     <div className='prodcuts-failed'>
-                        <Alert type='warning' description='Failed to Get Products...Check your Internet Connection Connection' />
+                        <Alert type='warning' message='Failed to Get Products...Check your Internet Connection Connection' />
                     </div>
 
                     :
@@ -55,15 +56,6 @@ const Product = () => {
                         products.map(product => 
 
                             <div className='product' key={product.id}>
-
-                                {/* {
-
-                                cart.filter(cartItem => cartItem.id === product.product_id.id).length === 0 ? null :
-                                    cart.filter(cartItem => cartItem.id === product.product_id.id)[0].quantity === product.product_quantity ?
-                                       openNotification()
-                                    :
-                                    null
-                                } */}
 
                             <div className='quntity-sold-holder'>
                                 <QuantityProgressBar 
@@ -77,24 +69,48 @@ const Product = () => {
                             </div>
                         
                              <div className='product-price'>
-                                 AED {product.product_price}
+                                 <p>AED {product.product_price}</p>
                              </div>
                             
                              <div className='product-buttons'>
                                  {
                                     product.isFavorite === 0 ?
-                                      <Button className='favorite-button' icon={<Favorite fontSize='large'/>} />
+                                       <Button 
+                                            className='favorite-button' 
+                                            icon={
+                                                <HeartFilled  style={{fontSize: '32px'}}/>
+                                            }
+                                            onClick={() => {
+                                                    dispatch(toggleIsFavorite(product.id));
+                                                    openNotification('Done','Product Has Been Added To Favorites');
+                                                }
+                                            }
+                                        />
                                     :
-                                        <Button className='favorite-button active' icon={<Favorite fontSize='large'/>} />
+                                        <Button 
+                                            className='favorite-button active' 
+                                            icon={<HeartFilled style={{fontSize: '32px',color: 'pink'}}/>} 
+                                            onClick={
+                                                () => {
+                                                    dispatch(toggleIsFavorite(product.id))
+                                                    openNotification('Done','Product Has Been Removed From Favorites');
+                                                }
+                                            }    
+                                        />
                                 }
                                  
-                                 <Button  className='cart-button' icon={<AddShoppingCart fontSize='large'/>} />
+                                 <Button  
+                                    className='cart-button' 
+                                    icon={<ShoppingCartOutlined style={{fontSize: '32px'}}/>}
+                                    onClick={() => setCartPopupOpen(true)} 
+                                >   
+                                </Button>
                              </div>
                         
                              <div className='add-to-cart'>
                                 <Button
                                     className='side-cart-button add-to-cart-button' 
-                                    icon={<Add fontSize='large'/>} 
+                                    icon={<PlusOutlined />} 
                                     onClick={() => dispatch(addToCart(product.product_id.id))}/>
                                 <span className='quantity-in-cart'>
                                     {
@@ -105,7 +121,7 @@ const Product = () => {
                                 </span>
                                 <Button 
                                     className='side-cart-button remove-from-cart-button' 
-                                    icon={<Remove fontSize='large' />} 
+                                    icon={<MinusOutlined />} 
                                     onClick={() => dispatch(removeFromCart(product.product_id.id))}/>
                              </div>
                         
@@ -122,7 +138,7 @@ const Product = () => {
                                     <button
                                         className='side-cart-button-mobile add-to-cart-button-mobile'  
                                         onClick={() => dispatch(addToCart(product.product_id.id))}>
-                                            <Add fontSize='large'/>
+                                            <PlusOutlined />
                                         </button>
                                      <p className='quantity-in-cart-mobile'>
                                         {
@@ -134,13 +150,17 @@ const Product = () => {
                                     <button 
                                         className='side-cart-button-mobile remove-from-cart-button-mobile' 
                                         onClick={() => dispatch(removeFromCart(product.product_id.id))} >
-                                            <Remove fontSize='large' />
+                                            <MinusOutlined />
                                     </button>
                                 </div>
 
                                 <div>
-                                    <Button type='primary' shape='round' className='show-your-cart'>
-                                        Show Your Cart
+                                    <Button 
+                                        type='primary' 
+                                        shape='round' 
+                                        className='show-your-cart'
+                                        onClick={() => setCartPopupOpen(true)}>
+                                            Show Your Cart
                                     </Button>
                                 </div>
 
@@ -161,8 +181,6 @@ const Product = () => {
                         )
 
             }
-
-
 
        </div>     
     )

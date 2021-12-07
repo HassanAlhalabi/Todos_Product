@@ -2,37 +2,37 @@ import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 import TodoPopup from './TodoPopup';
 import EditPopup from './EditPopup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { addTodo, updateTodo, deleteTodo, setCanceled, setCompleted } from '../../redux/todosSlice';
-import { AddRounded } from '@material-ui/icons';
-import { Alert } from 'antd';
+import { PlusOutlined } from '@ant-design/icons'
+import { Alert, Button } from 'antd';
 
 const Todo = () => {
 
-    const todos = useSelector(state => state.todos.todos);
-    const dispatch = useDispatch();
+    const todos = useAppSelector(state => state.todos.todos);
+    const dispatch = useAppDispatch();
 
-    const [titleInput,setTitleInput]     = useState(null);
-    const [addPopup,setPopup]            = useState(false);
-    const [editPopup,setEditPopup]       = useState(false);
-    const [editId,setEditId]             = useState(null);
-    const [errorMessage,setErrorMessage] = useState(null)
+    const [titleInput,setTitleInput]     = useState<string>('');
+    const [addPopup,setPopup]            = useState<boolean | null>(false);
+    const [editPopup,setEditPopup]       = useState<boolean | null>(false);
+    const [editId,setEditId]             = useState<number | null>(null);
+    const [errorMessage,setErrorMessage] = useState<string | null>(null)
 
     // Popups Handlers
     const showPopup =       () => setPopup(true);
     const showEditPopup =   () => setEditPopup(true);
     const hidePopup =       () => {
         setPopup(false);
-        setTitleInput(null);
+        setTitleInput('');
         setErrorMessage(null);
     }
     const hideEditPopup =   () => {
         setEditPopup(false);
-        setTitleInput(null);
+        setTitleInput('');
         setErrorMessage(null);
     } 
 
-    const handleInput = title => setTitleInput(title);
+    const handleInput = (title: string) => setTitleInput(title);
 
     // Add New Todo Handler
     const addNewTodo = () => {
@@ -46,7 +46,7 @@ const Todo = () => {
             // Clear Error Message
             setErrorMessage(null);
             // Empty Title Input
-            setTitleInput(null);
+            setTitleInput('');
             dispatch(addTodo(titleInput));
             hidePopup();
         }
@@ -64,14 +64,14 @@ const Todo = () => {
             // Clear Error Message
             setErrorMessage(null);
             // Empty Title Input
-            setTitleInput(null);
+            setTitleInput('');
             dispatch(updateTodo({titleInput,editId}))
             hideEditPopup();
         }
     }
 
     // Handle Actions Button 
-    const todoAction = (id,action) => {
+    const todoAction = (id: number, action: string) => {
 
         switch(action) {
             case 'delete':
@@ -91,7 +91,6 @@ const Todo = () => {
             default:
                 return null
         }
-    
     } 
 
 
@@ -101,16 +100,18 @@ const Todo = () => {
             <div className='todo-list-holder'>
                 {
                     todos.length === 0 ? 
-                        <Alert className='text-center' description='No Todos in the List' type='info'/>
+                        <Alert className='text-center' message='No Todos in the List' type='info'/>
                     : 
                         todos.map(todo => 
                             <TodoItem key={todo.id} todoProps={todo} todoAction={todoAction}/>
                         )
                 }
                 <div className='new-totdo-btn'>
-                    <button className='add-button' onClick={showPopup}>
-                        <AddRounded />
-                    </button>
+                    <Button
+                        icon={<PlusOutlined />}
+                        className='add-button' 
+                        onClick={showPopup}>  
+                    </Button>
                 </div>
             </div>
             {

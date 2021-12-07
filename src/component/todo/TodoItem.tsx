@@ -1,13 +1,26 @@
 import React from 'react';
-import { DeleteRounded } from '@material-ui/icons';
-import { EditRounded } from '@material-ui/icons';
-import { Close } from '@material-ui/icons';
-import { Check } from '@material-ui/icons';
+import { 
+        CheckOutlined,
+        DeleteFilled,
+        EditFilled,
+        CloseOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
-const TodoItem = ({ todoProps, todoAction}) => {
+interface TodoInterface {
+    id:          number;
+    title:       string;
+    date:        string;
+    isCompleted: boolean;
+    isActive:    boolean;
+    isCanceled:  boolean;
+}
 
-    let todoStyle = todoProps.isActive === true ? 
+const TodoItem: React.FC<{
+    todoProps: TodoInterface,
+    todoAction: (id: number,action: string) => undefined | null
+}> = ({ todoProps, todoAction}) => {
+
+    let todoStyle: {} = todoProps.isActive === true ? 
     {
         color: '#444',
         backgroundColor: '#FFF' ,
@@ -23,7 +36,7 @@ const TodoItem = ({ todoProps, todoAction}) => {
         }     
 
     return( 
-        <div className='todo-item' style={  todoStyle}>
+        <div className='todo-item' style={todoStyle}>
             <div>
                 <div className='todo-date'>
                     <p>{todoProps.date}</p>
@@ -39,28 +52,28 @@ const TodoItem = ({ todoProps, todoAction}) => {
                             <Button 
                                 shape='circle' 
                                 type='primary'
-                                icon={<DeleteRounded fontSize='small'/>}
+                                icon={<DeleteFilled />}
                                 className='action-button red-button'
                                 onClick={() => todoAction(todoProps.id,'delete')}   >
                             </Button>
                             <Button 
                                 shape='circle' 
                                 type='primary'
-                                icon={<EditRounded fontSize='small'/>}
+                                icon={<EditFilled />}
                                 className='action-button blue-button'
                                 onClick={() => todoAction(todoProps.id,'edit')}  >
                             </Button>
                             <Button 
                                 shape='circle' 
                                 type='primary'
-                                icon={<Close fontSize='small'/>}
+                                icon={<CloseOutlined />}
                                 className='action-button red-button'
                                 onClick={() => todoAction(todoProps.id,'cancel')}  >
                             </Button>
                             <Button 
                                 shape='circle' 
                                 type='primary'
-                                icon={<Check fontSize='small'/>}
+                                icon={<CheckOutlined />}
                                 className='action-button green-button'
                                 onClick={() => todoAction(todoProps.id,'setComplete')}  >
                             </Button>
@@ -70,7 +83,7 @@ const TodoItem = ({ todoProps, todoAction}) => {
                             <Button 
                                 shape='circle' 
                                 type='primary'
-                                icon={<DeleteRounded fontSize='small'/>}
+                                icon={<DeleteFilled />}
                                 className='action-button transparent-button-delete'
                                 onClick={() => todoAction(todoProps.id,'delete')}  >
                             </Button>

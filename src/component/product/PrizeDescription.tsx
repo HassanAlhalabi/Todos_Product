@@ -1,6 +1,12 @@
 import React from 'react';
 
-const PrizeDescription = ({image,title,desc}) => {
+type PrizeDescription = {
+    image: string,
+    title: string,
+    desc: string
+}
+
+const PrizeDescription = ({image,title,desc}: PrizeDescription) => {
     return(
         <div className='product-desc'>
             <div className='product-image'>

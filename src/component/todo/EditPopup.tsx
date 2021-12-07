@@ -3,11 +3,25 @@ import {Input} from 'antd';
 import { Button } from 'antd';
 import { Alert } from 'antd';
 
-const EditPopup = ({title, updateTodo, hideEditPopup, handleInput, error}) => {
+interface popupInterface {
+    title: string,
+    updateTodo: (event: React.MouseEvent) => void,
+    hideEditPopup: (event: React.MouseEvent) => void,
+    handleInput: Function,
+    error: string | null
+}
+
+const EditPopup: React.FC<popupInterface> = ({
+    title,
+    updateTodo,
+    hideEditPopup,
+    handleInput, 
+    error}
+    ) => {
 
     return(
         <div className='todo-popup'>
-            {error && <Alert className='error-message' description={error} type='error'/>}
+            {error && <Alert message={error} className='error-message' type='error'/>}
             <div className='popup-input'>
                 <div>
                     <Input

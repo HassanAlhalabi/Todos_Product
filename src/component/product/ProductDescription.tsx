@@ -1,6 +1,12 @@
 import React from 'react';
 
-const ProductDescription = ({image,title,desc}) => {
+type ProductDesc = {
+    image: string,
+    title: string,
+    desc: string,
+}
+
+const ProductDescription = ({image,title,desc}: ProductDesc) => {
     return(
         <div className='product-desc'>
             <div className='product-image'>

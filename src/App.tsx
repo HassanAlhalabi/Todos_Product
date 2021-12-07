@@ -1,9 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
-import {BrowserRouter , Route ,Switch, Link } from 'react-router-dom'
+import './App.css';
+import {BrowserRouter , Route ,Switch, Link } from 'react-router-dom';
 import Todo from './component/todo/Todo';
 import Product from './component/product/Product';
-import store from './redux/store';
+import { store } from './redux/store';
 import { Provider } from 'react-redux';
 
 function App() {

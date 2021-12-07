@@ -15,6 +15,7 @@ h1{
 h1.todo-header {
     font-weight: 900;
     text-align: center;
+    font-size: 48px
 }
 
 .text-center {
@@ -298,6 +299,10 @@ h1.todo-header {
     line-height: 35px;
 }
 
+.product-price p {
+    margin-bottom: 5px;
+}
+
 @media(max-width: 767px) {
     .product-price {
         top: 85px;
@@ -333,6 +338,7 @@ h1.todo-header {
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 999
 }
 
 @media(max-width: 767px) {
@@ -500,6 +506,19 @@ h1.todo-header {
     border: none;
 }
 
+.items-in-cart-number {
+    position: absolute;
+    bottom: 35px;
+    left: -10px;
+    background-color: #fbcd25;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
 .product-desc {
     display: flex;
     justify-content: flex-end;
@@ -597,6 +616,87 @@ h1.todo-header {
     animation-iteration-count: infinite;
     animation-duration: 1s;
     animation-timing-function: linear;
+}
+
+.cart-popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #292929ee;
+    z-index: 999999;
+    overflow-y: auto;
+}
+
+.cart-popup-inner {
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 600px;
+    max-width: 80%;
+    padding: 35px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+.cart-popup-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;;
+    cursor: pointer;
+}
+
+.cart-item-holder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #EEE;
+    margin-bottom: 15px;
+    padding:10px;
+    flex-wrap: wrap
+}
+
+.cart-item-image {
+    text-align: center
+}
+
+.cart-item-image img {
+    width: 50px;
+    height: 50px;
+}
+
+@media(max-width: 767px) {
+    .cart-item-holder {
+        justify-content: center
+    }
+    .cart-item-image {
+        width: 100%;
+    }
+    .cart-item-text {
+        width: 100%;
+        text-align: center;
+        padding: 5px 0px
+    }
+}
+
+.cart-item-quantity {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--purble);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-item-quantity h3 {
+    margin: 0;
+    color: #FFF
 }
 
 /* Animation */

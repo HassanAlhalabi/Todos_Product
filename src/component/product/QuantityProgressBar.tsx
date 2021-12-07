@@ -1,7 +1,12 @@
 import React from 'react';
 import {Progress} from 'antd';
 
-const QuantityProgressBar = ({total,sold}) => {
+type QuantityProgressProps = {
+    total: number,
+    sold: number
+}
+
+const QuantityProgressBar = ({total,sold}: QuantityProgressProps) => {
     let percent = Math.floor((sold/total)*100);
     return(
         <div className='quntity-sold'>

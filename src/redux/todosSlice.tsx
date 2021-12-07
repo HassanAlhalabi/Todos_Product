@@ -1,50 +1,63 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const months: string[] = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+export interface TodoInterface {
+    id:          number;
+    title:       string;
+    date:        string;
+    isCompleted: boolean;
+    isActive:    boolean;
+    isCanceled:  boolean;
+}
 
+interface InitialStateInterface {
+    todos: TodoInterface[];
+}
+
+const initialState: InitialStateInterface = {
+    todos: [
+        {
+            id: 1,
+            title: 'Todo 1',
+            date: 'january 24th, 2021 04:25 PM',
+            isCompleted: true,
+            isActive: false,
+            isCanceled: false,
+        },
+        {
+            id: 2,
+            title: 'Todo 2',
+            date: 'january 24th, 2021 04:25 PM',
+            isCompleted: false,
+            isActive: false,
+            isCanceled: true
+        },
+        {
+            id: 3,
+            title: 'Todo3',
+            date: 'january 24th, 2021 04:25 PM',
+            isCompleted: false,
+            isActive: true,
+            isCanceled: false,
+        },
+    ]
+}
 
 export const todoSlice = createSlice({
     name: 'todos',
-    initialState: {
-        todos: [
-            {
-                id: '1',
-                title: 'Todo 1',
-                date: 'january 24th, 2021 04:25 PM',
-                isCompleted: true,
-                isActive: false,
-                isCanceled: false,
-            },
-            {
-                id: '2',
-                title: 'Todo 2',
-                date: 'january 24th, 2021 04:25 PM',
-                isCompleted: false,
-                isActive: false,
-                isCanceled: true
-            },
-            {
-                id: '3',
-                title: 'Todo3',
-                date: 'january 24th, 2021 04:25 PM',
-                isCompleted: false,
-                isActive: true,
-                isCanceled: false,
-            },
-        ]
-    },
+    initialState,
     reducers: {
         addTodo: (state,action) => {
             // Create Date Required Form
             let currentDate = new Date();
             let dateFormat =    `${months[currentDate.getMonth()]} 
-                                ${currentDate.getDate()}th, 
+                                ${currentDate.getDate()}, 
                                 ${currentDate.getFullYear()} 
                                 ${currentDate.getHours()}:${currentDate.getMinutes()}
                                 ${currentDate.toLocaleTimeString().split(' ')[1]}`
             const newTodo = {
-                    id: Math.round(Math.random()*1000000)+'',
+                    id: Math.round(Math.random()*1000000),
                     title: action.payload,
                     date: dateFormat,
                     isCompleted: false,
