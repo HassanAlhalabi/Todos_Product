@@ -134,7 +134,7 @@ export const productsSlice = createSlice({
             state.status = 'loading';
         },
         [getProducts.fulfilled.toString()]: (state,response) => {
-            state.products = response.payload.data;
+            state.products = response.payload.data as Product[];
             state.status = 'success';
         },
         [getProducts.rejected.toString()]: (state) => {
